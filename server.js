@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const twilio = require("twilio");
-const path = require("path");
 require("dotenv").config();
+const path = require("path");
 
 
 const app = express();
