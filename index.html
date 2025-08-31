@@ -195,16 +195,22 @@
         ).textContent = `It's been ${days}d ${hours}h ${minutes}m ${seconds}s since we last talked`;
       }
 
-      setInterval(updateTimer, 10000);
+      setInterval(updateTimer, 1000);
       updateTimer(); // run immediately
 
       function delayedRedirect(event) {
         event.preventDefault();
-        // Add open class to trigger animations
+
+        // Prevent multiple clicks
+        const btn = event.target;
+        btn.disabled = true;
+
+        // Trigger animation
         document.getElementById("envelope").classList.add("open");
-        // Redirect after 8 seconds
+
+        // Redirect strictly after 8 seconds
         setTimeout(() => {
-          window.location.href = "Sweetheart.html";
+          window.location.replace("Sweetheart.html"); // replace instead of href
         }, 8000);
       }
     </script>
