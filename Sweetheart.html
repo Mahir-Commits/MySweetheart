@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For My Sweetheart</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Eater&family=Meow+Script&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Jim+Nightshade&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: url("S2.jpg") no-repeat bottom center;
+        background-size: cover;
+        background-attachment: fixed; /* keeps it fixed */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 100vh;
+        font-family: "Georgia", serif;
+        box-sizing: border-box;
+      }
+
+      .shayari {
+        font-size: 1.5rem;
+        line-height: 1.4;
+        max-width: 700px;
+        font-family: Merienda, cursive;
+        color: #413f40;
+        text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+        border-left: 4px solid #ff4081;
+        padding-top: 80px;
+        padding-bottom: 2px;
+        padding-left: 15px;
+      }
+      #typedText {
+        white-space: normal;
+        display: inline-block;
+      }
+      /* caret */
+      #typedText::after {
+        content: "";
+        display: inline-block;
+        width: 2px;
+        height: 1em;
+        background: #111;
+        vertical-align: -0.15em;
+        animation: blink 1s steps(1) infinite;
+        margin-left: 2px;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* each character is a span */
+      .char {
+        display: none;
+      }
+      .char.show {
+        display: inline;
+      }
+
+      /* highlight first letter of each line */
+      .first {
+        color: #ff4081;
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+
+      /* === Fold me! button style === */
+      .button-wrapper {
+        width: 100%;
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 30px;
+        display: none; /* hidden until typing done */
+        animation: fadeIn 2s ease forwards;
+      }
+
+      button {
+        position: relative;
+        font-size: 1.2em;
+        padding: 0.7em 1.4em;
+        background-color: #db2043;
+        text-decoration: none;
+        border: none;
+        border-radius: 0.5em;
+        color: #dedede;
+        box-shadow: 0.5em 0.5em 0.5em rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+
+      button::before {
+        position: absolute;
+        content: "";
+        height: 0;
+        width: 0;
+        top: 0;
+        left: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(33, 33, 33, 1) 0%,
+          rgba(33, 33, 33, 1) 50%,
+          rgba(150, 4, 31, 1) 50%,
+          rgba(191, 4, 38, 1) 60%
+        );
+        border-radius: 0 0 0.5em 0;
+        box-shadow: 0.2em 0.2em 0.2em rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+      }
+
+      button:hover::before {
+        width: 1.6em;
+        height: 1.6em;
+      }
+
+      button:active {
+        box-shadow: 0.2em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+        transform: translate(0.1em, 0.1em);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shayari">
+      <div id="typedText"></div>
+    </div>
+
+    <!-- button (hidden until typing completes) -->
+    <a href="music.html">
+      <div id="buttonWrap" class="button-wrapper">
+        <button><b>Click Here!</b></button>
+      </div>
+    </a>
+
+    <script>
+      const rawText = `My lonely nights whisper your name, Saniya.
+All my dreams circle back to your smile.
+Holding your glasses, I imagine your eyes.
+I carry your smell in silence of my heart.
+Rays of love burn like a candle in the dark.
+
+My laptop feels empty without your face on the screen.
+I build software, but my code always writes your name.
+Sometimes I open a book, all I read is “I miss you.”
+Silent moves of chess remind me, you are my missing move..
+
+In every heartbeat, I ache for your nearness.
+Never has a Chocolate felt so sweet as your smile.
+Gentle music reminds me of our story.
+
+You’re my Princess, the destiny my soul was born to find.
+I dream of the day I can softly kiss you.
+Until then, I write poetry under the stars.
+
+Sweetheart, even sunsets can’t match your beauty.
+With every memory, I fall for you again.
+Every heartbeat whispers, “You are my forever.”
+Even the universe holds our secret.
+A ring in my heart belongs only to you.
+
+Holding onto hope, Mahir’s love waits for you.
+Every thought of you lights my nights.
+All my roads lead back to you.
+Rays of love guard us through the distance.
+Together, forever, we’ll never drift apart.`;
+
+      const container = document.getElementById("typedText");
+      const speed = 5; // ms per character
+      const items = [];
+
+      (function build() {
+        const lines = rawText.split("\n");
+        lines.forEach((line, lineIdx) => {
+          const isEmpty = line.length === 0;
+          if (!isEmpty) {
+            for (let j = 0; j < line.length; j++) {
+              const ch = line[j];
+              const sp = document.createElement("span");
+              sp.className = "char" + (j === 0 ? " first" : "");
+              sp.textContent = ch;
+              container.appendChild(sp);
+              items.push(sp);
+            }
+          }
+          const br = document.createElement("br");
+          br.style.display = "none";
+          container.appendChild(br);
+          items.push(br);
+        });
+      })();
+
+      let idx = 0;
+      function typeNext() {
+        if (idx >= items.length) {
+          // ✅ show button after typing done
+          document.getElementById("buttonWrap").style.display = "block";
+          return;
+        }
+
+        const el = items[idx];
+        if (el.tagName === "BR") {
+          el.style.display = "";
+        } else {
+          el.classList.add("show");
+        }
+        idx++;
+
+        const nearBottom =
+          window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 60;
+        if (nearBottom) {
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+
+        setTimeout(typeNext, speed);
+      }
+
+      window.onload = typeNext;
+    </script>
+  </body>
+</html>

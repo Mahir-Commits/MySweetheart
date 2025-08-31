@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sweetheart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Eater&family=Meow+Script&family=Merienda:wght@300..900&family=Mozilla+Headline:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Jim+Nightshade&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        height: 100%;
+        overflow: hidden; /* 🔒 forcefully prevents both scrollbars */
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        padding: 0.5rem;
+        background: url("b2.jpg") no-repeat center center/cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* title stays at top, envelope goes bottom */
+        align-items: center;
+        height: 100vh; /* lock to viewport height */
+        width: 100vw; /* lock to viewport width */
+        overflow: hidden; /* no extra scroll */
+      }
+
+      .Title {
+        font-family: "Merienda", cursive;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        overflow: visible;
+        display: block;
+        max-width: 100%;
+        font-size: 2.5rem;
+        margin-top: 1rem;
+        text-align: center;
+        animation: lights 5s 750ms linear infinite;
+        color: #a9a9a9;
+      }
+
+      @keyframes lights {
+        0% {
+          color: #000000; /* Black */
+          text-shadow: 0 0 0.8em #000000cc, 0 0 0.2em #333333aa,
+            -1em -0.2em 0.6em #11111155, 1em 0.2em 0.6em #22222255;
+        }
+
+        25% {
+          color: #2e2e2e; /* Dark grey */
+          text-shadow: 0 0 1em #444444aa, 0 0 0.25em #00000088,
+            -0.5em -0.15em 0.3em #11111144, 0.5em 0.15em 0.3em #ffb6c144;
+        }
+
+        50% {
+          color: #3d3d3d; /* Grey with a bit of depth */
+          text-shadow: 0 0 1em #555555aa, 0 0 0.25em #ffb6c166,
+            -0.25em -0.1em 0.15em #22222255, 0.25em 0.1em 0.15em #00000055;
+        }
+
+        75% {
+          color: #555555; /* Mid-grey */
+          text-shadow: 0 0 1em #666666aa, 0 0 0.3em #ff69b455,
+            0.5em -0.15em 0.25em #00000066, -0.5em 0.15em 0.25em #33333388;
+        }
+
+        100% {
+          color: #000000; /* Back to black */
+          text-shadow: 0 0 0.8em #000000cc, 0 0 0.2em #444444aa,
+            1em -0.2em 0.6em #11111155, -1em 0.2em 0.6em #ffb6c133;
+        }
+      }
+
+      /* NEW: trigger animations by JS instead of hover */
+      .open .seal {
+        opacity: 0;
+        transform: scale(0) rotate(180deg);
+        transition: all 1s;
+      }
+      .open .tp {
+        clip-path: polygon(50% 0%, 100% 0, 0 0);
+        transition: all 1s;
+      }
+      .open .lft {
+        clip-path: polygon(50% 50%, 0 0, 0 100%);
+        transition: all 0.7s;
+      }
+      .open .rgt {
+        clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+        transition: all 0.7s;
+      }
+      .open .btm {
+        clip-path: polygon(50% 50%, 100% 100%, 0 100%);
+        transition: all 0.7s;
+      }
+      .open .letter {
+        transform: translateY(-4rem);
+        transition: transform 2s ease-in-out;
+      }
+
+      #timePassed {
+        font-family: "Merienda", cursive;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="Title">Miss You Sweetheart</h1>
+
+    <!-- Envelope placed at bottom center -->
+    <div class="scale-110 origin-center">
+      <div class="mb-6">
+        <div
+          id="envelope"
+          class="relative bg-black w-[270px] sm:w-[300px] transition-all duration-700 aspect-video flex items-center justify-center"
+        >
+          <div
+            class="letter transition-all flex flex-col items-center py-5 justify-start bg-white w-full h-full absolute"
+          >
+            <p
+              class="text-xl sm:text-3xl font-semibold text-gray-500 font-serif"
+            >
+              Miss You, My Love!
+            </p>
+            <p
+              class="px-10 text-[12px] sm:text-[30px] text-gray-700"
+              id="timePassed"
+            >
+              It's been ... since we last talked
+            </p>
+            <p class="px-10 text-xl sm:text-xl text-gray-700">MAHIR</p>
+          </div>
+          <button
+            onclick="delayedRedirect(event)"
+            class="seal bg-rose-500 text-red-800 w-10 aspect-square rounded-full z-40 text-[10px] flex items-center justify-center font-semibold [clip-path:polygon(50%_0%,_80%_10%,_100%_35%,_100%_70%,_80%_90%,_50%_100%,_20%_90%,_0%_70%,_0%_35%,_20%_10%)] transition-all duration-1000 border-4 border-rose-900"
+          >
+            SMKY
+          </button>
+          <div
+            class="tp transition-all duration-1000 bg-neutral-800 absolute [clip-path:polygon(50%_50%,_100%_0,_0_0)] w-full h-full"
+          ></div>
+          <div
+            class="lft transition-all duration-700 absolute w-full h-full bg-neutral-900 [clip-path:polygon(50%_50%,_0_0,_0_100%)]"
+          ></div>
+          <div
+            class="rgt transition-all duration-700 absolute w-full h-full bg-neutral-800 [clip-path:polygon(50%_50%,_100%_0,_100%_100%)]"
+          ></div>
+          <div
+            class="btm transition-all duration-700 absolute w-full h-full bg-neutral-900 [clip-path:polygon(50%_50%,_100%_100%,_0_100%)]"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Start time: Wednesday, Jan 1 2025 12:02 AM (adjust month/date if needed)
+      const lastTalked = new Date("2025-08-27T00:02:00");
+
+      function updateTimer() {
+        const now = new Date();
+        let diff = Math.floor((now - lastTalked) / 1000); // in seconds
+
+        const days = Math.floor(diff / (3600 * 24));
+        diff %= 3600 * 24;
+
+        const hours = Math.floor(diff / 3600);
+        diff %= 3600;
+
+        const minutes = Math.floor(diff / 60);
+        const seconds = diff % 60;
+
+        document.getElementById(
+          "timePassed"
+        ).textContent = `It's been ${days}d ${hours}h ${minutes}m ${seconds}s since we last talked`;
+      }
+
+      setInterval(updateTimer, 1000);
+      updateTimer(); // run immediately
+
+      function delayedRedirect(event) {
+        event.preventDefault();
+        // Add open class to trigger animations
+        document.getElementById("envelope").classList.add("open");
+        // Redirect after 8 seconds
+        setTimeout(() => {
+          window.location.href = "Sweetheart.html";
+        }, 8000);
+      }
+    </script>
+  </body>
+</html>
